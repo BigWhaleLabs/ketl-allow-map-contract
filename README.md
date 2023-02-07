@@ -1,22 +1,8 @@
-# Zero-Knowledge starter
-
-A zero-config zero-knowledge project starter. Just clone, install dependencies and start developing. Heavily inspired by [BigWhaleLabs/seal-cred-verifier-contract](https://github.com/BigWhaleLabs/seal-cred-verifier-contract). Features included:
-
-- Test suits for both the circuits and the smart contracts
-- Set of scripts to compile circuits and deploy smart contracts
-- VSCode extensions list to streamline the development
-- Linters for all the code you write
-- One command to deploy an NPM package with smart contract typings for TypeScript
-- Smart contracts are versioned by default
-- Automatic Etherscan verification of deployed contracts
-
-Features not included:
-
-- Messing with config files instead of building circuits
+# Whitelist ZKP for Ketl
 
 ## Usage
 
-1. Clone the repository with `git clone git@github.com:backmeupplz/zk-starter.git`
+1. Clone the repository with `git clone git@github.com:BigWhaleLabs/ketl-whitelist-verifier-contract.git`
 2. Install the dependencies with `yarn`
 3. Add environment variables to your `.env` file
 4. Check out `yarn generate-inputs` script and modify it so that you get the correct inputs are generated for your circuits, then run `yarn generate-inputs`

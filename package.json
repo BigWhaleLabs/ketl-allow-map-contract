@@ -1,10 +1,10 @@
 {
-  "name": "zk-starter",
+  "name": "ketl-whitelist-verifier-contract",
   "version": "0.0.1",
-  "description": "ZK project starter",
+  "description": "Whitelist ZKP for Ketl",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/backmeupplz/zk-starter"
+    "url": "git+https://github.com/BigWhaleLabs/ketl-whitelist-verifier-contract"
   },
   "license": "MIT",
   "np": {
@@ -29,9 +29,7 @@
     "release": "np",
     "prepublishOnly": "yarn build && yarn tsc",
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
-    "compile": "yarn compile-eddsa && yarn compile-factor",
-    "compile-eddsa": "scripts/compile-circuit.sh EdDSAChecker eddsa",
-    "compile-factor": "scripts/compile-circuit.sh FactorChecker factor"
+    "compile": "scripts/compile-circuit.sh KetlWhitelistChecker ketl-whitelist"
   },
   "devDependencies": {
     "@big-whale-labs/versioned-contract": "^1.0.2",
