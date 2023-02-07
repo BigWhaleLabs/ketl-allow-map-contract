@@ -12,7 +12,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": [
-    "ketl"
-  ]
+  "cSpell.words": ["ketl"]
 }

@@ -29,12 +29,12 @@
     "release": "np",
     "prepublishOnly": "yarn build && yarn tsc",
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
-    "compile": "scripts/compile-circuit.sh KetlWhitelistChecker ketl-whitelist"
+    "compile": "scripts/compile-circuit.sh WhitelistChecker ketl-whitelist",
+    "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_12.ptau -o pot/pot12_final.ptau"
   },
   "devDependencies": {
     "@big-whale-labs/versioned-contract": "^1.0.2",
     "@ethersproject/providers": "^5.7.2",
-    "@noble/ed25519": "^1.7.2",
     "@nomiclabs/hardhat-ethers": "^2.2.2",
     "@nomiclabs/hardhat-etherscan": "^3.1.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
@@ -78,5 +78,8 @@
   "packageManager": "yarn@3.4.1",
   "engines": {
     "node": ">=8.3.0"
+  },
+  "dependencies": {
+    "@zk-kit/incremental-merkle-tree": "^1.0.0"
   }
 }

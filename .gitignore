@@ -8,6 +8,8 @@ build/*
 !build/.gitkeep
 public/*
 !public/.gitkeep
+pot/*
+!pot/.gitkeep
 
 # Hardhat files
 cache
@@ -15,10 +17,6 @@ artifacts
 
 # logs
 *.log
-
-# PoT files
-pot/*
-!pot/pot16_final.ptau
 
 # yarn
 .pnp.*
