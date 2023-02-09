@@ -16,7 +16,11 @@ template WhitelistChecker(levels) {
   }
 
   signal output root <== merkleTreeChecker.root;
-  log(root);
+  // Create nullifier
+  component poseidon = Poseidon(1);
+  poseidon.inputs[0] <== leaf;
+
+  signal output nullifier <== poseidon.out;
 }
 
 component main = WhitelistChecker(15);
