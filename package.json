@@ -1,10 +1,10 @@
 {
-  "name": "ketl-whitelist-verifier-contract",
+  "name": "ketl-allow-map-contract",
   "version": "0.0.1",
-  "description": "Whitelist ZKP for Ketl",
+  "description": "Allow map contract for Ketl",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BigWhaleLabs/ketl-whitelist-verifier-contract"
+    "url": "git+https://github.com/BigWhaleLabs/ketl-allow-map-contract"
   },
   "license": "MIT",
   "np": {
@@ -29,7 +29,7 @@
     "release": "np",
     "prepublishOnly": "yarn build && yarn tsc",
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
-    "compile": "scripts/compile-circuit.sh WhitelistChecker ketl-whitelist",
+    "compile": "scripts/compile-circuit.sh AllowMapChecker ketl-allow-map",
     "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_12.ptau -o pot/pot12_final.ptau"
   },
   "devDependencies": {

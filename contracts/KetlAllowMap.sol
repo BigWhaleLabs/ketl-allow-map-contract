@@ -62,9 +62,9 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@big-whale-labs/versioned-contract/contracts/Versioned.sol";
 import "@zk-kit/incremental-merkle-tree.sol/IncrementalBinaryTree.sol";
-import "./WhitelistCheckerVerifier.sol";
+import "./AllowMapCheckerVerifier.sol";
 
-contract KetlWhitelist is Versioned {
+contract KetlAllowMap is Versioned {
   using Counters for Counters.Counter;
   using IncrementalBinaryTree for IncrementalTreeData;
 
@@ -101,7 +101,7 @@ contract KetlWhitelist is Versioned {
   ) public {
     // Check the proof
     require(
-      WhitelistCheckerVerifier(verifierContract).verifyProof(a, b, c, input),
+      AllowMapCheckerVerifier(verifierContract).verifyProof(a, b, c, input),
       "Invalid ZK proof"
     );
     // Check the nullifier

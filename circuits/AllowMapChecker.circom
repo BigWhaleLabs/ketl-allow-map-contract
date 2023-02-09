@@ -2,7 +2,7 @@ pragma circom 2.0.4;
 
 include "./templates/MerkleTreeCheckerPoseidon.circom";
 
-template WhitelistChecker(levels) {
+template AllowMapChecker(levels) {
   // Check MerkleTree
   signal input leaf;
   signal input pathElements[levels];
@@ -23,4 +23,4 @@ template WhitelistChecker(levels) {
   signal output nullifier <== poseidon.out;
 }
 
-component main = WhitelistChecker(15);
+component main = AllowMapChecker(15);

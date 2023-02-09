@@ -1,11 +1,11 @@
 import { cwd } from 'process'
 import { resolve } from 'path'
 import { writeFileSync } from 'fs'
-import getWhitelistInputs from '../utils/inputs/getWhitelistInputs'
+import getAllowMapInputs from '../utils/inputs/getAllowMapInputs'
 
 void (async () => {
   const inputs = {
-    'ketl-whitelist': getWhitelistInputs,
+    'ketl-allow-map': getAllowMapInputs,
   }
   for (const [name, fn] of Object.entries(inputs)) {
     const inputs = await fn()

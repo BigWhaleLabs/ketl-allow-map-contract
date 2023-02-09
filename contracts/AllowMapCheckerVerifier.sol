@@ -214,7 +214,7 @@ library Pairing {
   }
 }
 
-contract WhitelistCheckerVerifier is Versioned {
+contract AllowMapCheckerVerifier is Versioned {
   constructor(string memory _version) Versioned(_version) {}
 
   using Pairing for *;

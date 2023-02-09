@@ -7987,9 +7987,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ketl-whitelist-verifier-contract@workspace:.":
+"ketl-allow-map-contract@workspace:.":
   version: 0.0.0-use.local
-  resolution: "ketl-whitelist-verifier-contract@workspace:."
+  resolution: "ketl-allow-map-contract@workspace:."
   dependencies:
     "@big-whale-labs/versioned-contract": ^1.0.2
     "@ethersproject/providers": ^5.7.2

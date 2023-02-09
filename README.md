@@ -1,8 +1,8 @@
-# Whitelist ZKP for Ketl
+# Allow Map ZKP for Ketl
 
 ## Usage
 
-1. Clone the repository with `git clone git@github.com:BigWhaleLabs/ketl-whitelist-verifier-contract.git`
+1. Clone the repository with `git clone git@github.com:BigWhaleLabs/ketl-allow-map-contract.git`
 2. Install the dependencies with `yarn`
 3. Add environment variables to your `.env` file
 4. Check out `yarn generate-inputs` script and modify it so that you get the correct inputs are generated for your circuits, then run `yarn generate-inputs`
