@@ -1,5 +1,5 @@
 {
-  "name": "ketl-allow-map-contract",
+  "name": "@big-whale-labs/ketl-allow-map-contract",
   "version": "0.0.1",
   "description": "Allow map contract for Ketl",
   "repository": {

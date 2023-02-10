@@ -32,6 +32,56 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@big-whale-labs/ketl-allow-map-contract@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@big-whale-labs/ketl-allow-map-contract@workspace:."
+  dependencies:
+    "@big-whale-labs/versioned-contract": ^1.0.2
+    "@ethersproject/providers": ^5.7.2
+    "@nomiclabs/hardhat-ethers": ^2.2.2
+    "@nomiclabs/hardhat-etherscan": ^3.1.5
+    "@nomiclabs/hardhat-waffle": ^2.0.3
+    "@openzeppelin/contracts": ^4.8.1
+    "@typechain/ethers-v5": ^10.2.0
+    "@typechain/hardhat": ^6.1.5
+    "@types/chai": ^4.3.4
+    "@types/mocha": ^10.0.1
+    "@types/node": ^18.11.19
+    "@typescript-eslint/eslint-plugin": ^5.51.0
+    "@typescript-eslint/parser": ^5.51.0
+    "@zk-kit/incremental-merkle-tree": ^1.0.0
+    "@zk-kit/incremental-merkle-tree.sol": ^1.3.3
+    chai: ^4.3.7
+    circom_tester: ^0.0.19
+    circomlib: ^2.0.5
+    circomlibjs: ^0.1.7
+    dotenv: ^16.0.3
+    envalid: ^7.3.1
+    eslint: ^8.33.0
+    eslint-config-prettier: ^8.6.0
+    eslint-config-standard: ^17.0.0
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-n: ^15.6.1
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-promise: ^6.1.1
+    eslint-plugin-sort-imports-es6-autofix: ^0.6.0
+    ethereum-waffle: ^4.0.9
+    ethers: ^5.7.2
+    hardhat: ^2.12.6
+    hardhat-gas-reporter: ^1.0.9
+    np: ^7.6.3
+    prettier: ^2.8.3
+    prettier-plugin-solidity: ^1.1.2
+    snarkjs: ^0.5.0
+    solhint: ^3.3.8
+    solidity-coverage: ^0.8.2
+    ts-node: ^10.9.1
+    typechain: ^8.1.1
+    typescript: ^4.9.5
+  languageName: unknown
+  linkType: soft
+
 "@big-whale-labs/versioned-contract@npm:^1.0.2":
   version: 1.0.2
   resolution: "@big-whale-labs/versioned-contract@npm:1.0.2"
@@ -7986,56 +8036,6 @@ __metadata:
   checksum: 39a7d6128b8ee4cb7dcd186fc7e20c6087cc39f573a0f81b147c323f688f1f7c2b34f62c4ae189fe9b81c6730b2d1228d8a399cdc1f3d8a4c8f030cdc4f20272
   languageName: node
   linkType: hard
-
-"ketl-allow-map-contract@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "ketl-allow-map-contract@workspace:."
-  dependencies:
-    "@big-whale-labs/versioned-contract": ^1.0.2
-    "@ethersproject/providers": ^5.7.2
-    "@nomiclabs/hardhat-ethers": ^2.2.2
-    "@nomiclabs/hardhat-etherscan": ^3.1.5
-    "@nomiclabs/hardhat-waffle": ^2.0.3
-    "@openzeppelin/contracts": ^4.8.1
-    "@typechain/ethers-v5": ^10.2.0
-    "@typechain/hardhat": ^6.1.5
-    "@types/chai": ^4.3.4
-    "@types/mocha": ^10.0.1
-    "@types/node": ^18.11.19
-    "@typescript-eslint/eslint-plugin": ^5.51.0
-    "@typescript-eslint/parser": ^5.51.0
-    "@zk-kit/incremental-merkle-tree": ^1.0.0
-    "@zk-kit/incremental-merkle-tree.sol": ^1.3.3
-    chai: ^4.3.7
-    circom_tester: ^0.0.19
-    circomlib: ^2.0.5
-    circomlibjs: ^0.1.7
-    dotenv: ^16.0.3
-    envalid: ^7.3.1
-    eslint: ^8.33.0
-    eslint-config-prettier: ^8.6.0
-    eslint-config-standard: ^17.0.0
-    eslint-plugin-import: ^2.27.5
-    eslint-plugin-n: ^15.6.1
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-promise: ^6.1.1
-    eslint-plugin-sort-imports-es6-autofix: ^0.6.0
-    ethereum-waffle: ^4.0.9
-    ethers: ^5.7.2
-    hardhat: ^2.12.6
-    hardhat-gas-reporter: ^1.0.9
-    np: ^7.6.3
-    prettier: ^2.8.3
-    prettier-plugin-solidity: ^1.1.2
-    snarkjs: ^0.5.0
-    solhint: ^3.3.8
-    solidity-coverage: ^0.8.2
-    ts-node: ^10.9.1
-    typechain: ^8.1.1
-    typescript: ^4.9.5
-  languageName: unknown
-  linkType: soft
 
 "keyv@npm:^3.0.0":
   version: 3.1.0
