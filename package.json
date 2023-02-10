@@ -1,6 +1,6 @@
 {
   "name": "ketl-allow-map-contract",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Allow map contract for Ketl",
   "repository": {
     "type": "git",
