@@ -8,14 +8,12 @@
     "baseUrl": ".",
     "outDir": "dist",
     "noImplicitAny": false,
-    "noEmit": true,
     "resolveJsonModule": true
   },
   "include": [
     "scripts/**/*",
     "test/**/*",
     "hardhat.config.ts",
-    "typechain/**/*",
-    "utils/**/*"
+    "typechain/**/*"
   ]
 }
