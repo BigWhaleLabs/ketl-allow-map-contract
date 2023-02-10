@@ -17,4 +17,5 @@
     "hardhat.config.ts",
     "typechain/**/*"
   ],
+  "exclude": ["node_modules"]
 }
