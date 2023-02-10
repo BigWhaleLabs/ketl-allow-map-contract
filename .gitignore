@@ -10,6 +10,7 @@ public/*
 !public/.gitkeep
 pot/*
 !pot/.gitkeep
+dist
 
 # Hardhat files
 cache
