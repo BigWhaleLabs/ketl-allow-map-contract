@@ -130,4 +130,13 @@ contract KetlAllowMap is Versioned {
     merkleRootMap[merkleRoot] = true;
     emit TokenHashesAdded(_tokenHashes, merkleRoot);
   }
+
+  function isTokenExists(uint256 value) public view returns (bool) {
+    for (uint256 i = 0; i < tokenHashes.length; i++) {
+      if (tokenHashes[i] == value) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
