@@ -31,6 +31,7 @@
     "prepublishOnly": "yarn build && yarn tsc",
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
     "generate-tokens": "ts-node scripts/generate-tokens.ts",
+    "load-tokens": "yarn hardhat run --network deploy scripts/load-tokens.ts",
     "compile": "scripts/compile-circuit.sh AllowMapChecker ketl-allow-map",
     "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_12.ptau -o pot/pot12_final.ptau"
   },
@@ -82,5 +83,8 @@
   "packageManager": "yarn@3.4.1",
   "engines": {
     "node": ">=8.3.0"
+  },
+  "dependencies": {
+    "prompt": "^1.3.0"
   }
 }
