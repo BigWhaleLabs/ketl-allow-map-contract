@@ -4,20 +4,36 @@ import { randomBytes } from 'crypto'
 import { resolve } from 'path'
 import { writeFileSync } from 'fs'
 
-const numbers: Array<bigint> = []
+const vcTokens: Array<bigint> = []
+const founderTokens: Array<bigint> = []
 void (async () => {
   for (let i = 0; i < 10; i++) {
-    const randomBuffer = randomBytes(12)
+    const randomBuffer = randomBytes(32)
     const randomNumber = BigInt(randomBuffer.readUIntBE(1, 6))
     const poseidon = await buildPoseidon()
     const F = poseidon.F
     const hashedNumber = F.toString(poseidon([randomNumber]))
-    numbers.push(hashedNumber)
+    vcTokens.push(hashedNumber)
+  }
+  for (let i = 0; i < 10; i++) {
+    const randomBuffer = randomBytes(32)
+    const randomNumber = BigInt(randomBuffer.readUIntBE(1, 6))
+    const poseidon = await buildPoseidon()
+    const F = poseidon.F
+    const hashedNumber = F.toString(poseidon([randomNumber]))
+    founderTokens.push(hashedNumber)
   }
 
   writeFileSync(
-    resolve(cwd(), 'inputs', `tokens.txt`),
-    numbers.join('\n'),
+    resolve(cwd(), 'inputs', `vc-tokens.txt`),
+    vcTokens.join('\n'),
     'utf-8'
   )
+  console.log('VC tokens saved!')
+  writeFileSync(
+    resolve(cwd(), 'inputs', `founder-tokens.txt`),
+    founderTokens.join('\n'),
+    'utf-8'
+  )
+  console.log('Founder tokens saved!')
 })()
