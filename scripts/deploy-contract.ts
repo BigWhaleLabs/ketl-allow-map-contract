@@ -27,8 +27,9 @@ async function main() {
   const chainName = chains[chainId]
 
   const contractName = 'KetlAllowMap'
+  const depth = 15
 
-  const { verifierAddress, depth } = await prompt.get({
+  const { verifierAddress } = await prompt.get({
     properties: {
       verifierAddress: {
         required: true,

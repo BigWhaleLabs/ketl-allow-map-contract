@@ -5,7 +5,9 @@ import { resolve } from 'path'
 import { writeFileSync } from 'fs'
 
 const vcTokens: Array<bigint> = []
+const vcNumbers: Array<bigint> = []
 const founderTokens: Array<bigint> = []
+const founderNumbers: Array<bigint> = []
 void (async () => {
   for (let i = 0; i < 10; i++) {
     const randomBuffer = randomBytes(32)
@@ -14,6 +16,7 @@ void (async () => {
     const F = poseidon.F
     const hashedNumber = F.toString(poseidon([randomNumber]))
     vcTokens.push(hashedNumber)
+    vcNumbers.push(randomNumber)
   }
   for (let i = 0; i < 10; i++) {
     const randomBuffer = randomBytes(32)
@@ -22,6 +25,7 @@ void (async () => {
     const F = poseidon.F
     const hashedNumber = F.toString(poseidon([randomNumber]))
     founderTokens.push(hashedNumber)
+    founderNumbers.push(randomNumber)
   }
 
   writeFileSync(
@@ -29,10 +33,20 @@ void (async () => {
     vcTokens.join('\n'),
     'utf-8'
   )
+  writeFileSync(
+    resolve(cwd(), 'inputs', `vc-numbers.txt`),
+    vcNumbers.join('\n'),
+    'utf-8'
+  )
   console.log('VC tokens saved!')
   writeFileSync(
     resolve(cwd(), 'inputs', `founder-tokens.txt`),
     founderTokens.join('\n'),
+    'utf-8'
+  )
+  writeFileSync(
+    resolve(cwd(), 'inputs', `founder-numbers.txt`),
+    founderNumbers.join('\n'),
     'utf-8'
   )
   console.log('Founder tokens saved!')
