@@ -12,7 +12,9 @@ pot/*
 !pot/.gitkeep
 dist
 */vc-tokens.txt
+*/vc-numbers.txt
 */founder-tokens.txt
+*/founder-numbers.txt
 
 # Hardhat files
 cache
