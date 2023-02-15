@@ -4,12 +4,12 @@ import { expect } from 'chai'
 import { version } from '../package.json'
 import getSolidityCallProof from '../utils/getSolidityCallProof'
 
-describe('EdDSACheckerVerifier contract', function () {
+describe('AllowMapCheckerVerifier verifier', function () {
   before(async function () {
-    const factory = await ethers.getContractFactory('EdDSACheckerVerifier')
+    const factory = await ethers.getContractFactory('AllowMapCheckerVerifier')
     this.contract = await factory.deploy(version)
     await this.contract.deployed()
-    this.proof = await getSolidityCallProof('eddsa')
+    this.proof = await getSolidityCallProof('ketl-allow-map')
   })
   describe('Constructor', function () {
     it('should deploy the contract with the correct fields', async function () {
