@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { buildPoseidon } from 'circomlibjs'
 import { cwd } from 'process'
 import { randomBytes } from 'crypto'
@@ -8,24 +9,27 @@ const vcTokens: Array<bigint> = []
 const vcNumbers: Array<bigint> = []
 const founderTokens: Array<bigint> = []
 const founderNumbers: Array<bigint> = []
+
+const getRandomUint256 = () => BigNumber.from(randomBytes(32)).toBigInt()
+
 void (async () => {
   for (let i = 0; i < 10; i++) {
-    const randomBuffer = randomBytes(32)
-    const randomNumber = BigInt(randomBuffer.readUIntBE(1, 6))
     const poseidon = await buildPoseidon()
     const F = poseidon.F
-    const hashedNumber = F.toString(poseidon([randomNumber]))
+    const randomUint256 = getRandomUint256()
+    const hashedNumber = F.toString(poseidon([randomUint256]))
+
     vcTokens.push(hashedNumber)
-    vcNumbers.push(randomNumber)
+    vcNumbers.push(randomUint256)
   }
   for (let i = 0; i < 10; i++) {
-    const randomBuffer = randomBytes(32)
-    const randomNumber = BigInt(randomBuffer.readUIntBE(1, 6))
     const poseidon = await buildPoseidon()
     const F = poseidon.F
-    const hashedNumber = F.toString(poseidon([randomNumber]))
+    const randomUint256 = getRandomUint256()
+    const hashedNumber = F.toString(poseidon([randomUint256]))
+
     founderTokens.push(hashedNumber)
-    founderNumbers.push(randomNumber)
+    founderNumbers.push(randomUint256)
   }
 
   writeFileSync(
