@@ -29,25 +29,36 @@ async function main() {
   const contractName = 'KetlAllowMap'
   const depth = 15
 
-  const { verifierAddress } = await prompt.get({
+  console.log(
+    'NOTE: If `verifierAddress` or `incrementalBinaryTreeLibAddress` will not be provided, new contracts will be deployed automatically'
+  )
+  let { verifierAddress, incrementalBinaryTreeLibAddress } = await prompt.get({
     properties: {
       verifierAddress: {
-        required: true,
+        required: false,
         pattern: regexes.ethereumAddress,
       },
-      depth: {
-        required: true,
-        default: 30,
+      incrementalBinaryTreeLibAddress: {
+        required: false,
+        pattern: regexes.ethereumAddress,
       },
     },
   })
 
-  console.log(`Deploying IncrementalBinaryTreeLib...`)
-  const incrementalBinaryTreeLibAddress = await getIncrementalTreeContract()
-
+  console.log('verifierAddress', verifierAddress)
   console.log(
-    `IncrementalBinaryTreeLib deployed to ${incrementalBinaryTreeLibAddress}`
+    'incrementalBinaryTreeLibAddress',
+    incrementalBinaryTreeLibAddress
   )
+
+  // Deploy new AllowMapCheckerVerifier if address of exsiting is not provided
+  if (!verifierAddress) {
+    verifierAddress = await deployVerifier()
+  }
+  // Deploy new IncrementalBinaryTreeLib if address of exsiting is not provided
+  if (!incrementalBinaryTreeLibAddress) {
+    incrementalBinaryTreeLibAddress = await deployIncrementalBinaryTreeLib()
+  }
 
   console.log(`Deploying ${contractName}...`)
 
@@ -76,9 +87,6 @@ async function main() {
       address,
       constructorArguments: [version, verifierAddress, depth],
     })
-    await run('verify:verify', {
-      incrementalBinaryTreeLibAddress,
-    })
   } catch (err) {
     console.log(
       'Error verifiying contract on Etherscan:',
@@ -94,6 +102,48 @@ async function main() {
       chainName !== 'mainnet' ? `${chainName}.` : ''
     }etherscan.io/address/${address}`
   )
+}
+
+async function deployVerifier() {
+  console.log(`Deploying AllowMapCheckerVerifier...`)
+  const Verifier = await ethers.getContractFactory('AllowMapCheckerVerifier')
+  const verifier = await Verifier.deploy(version)
+  await verifier.deployed()
+
+  await new Promise((resolve) => setTimeout(resolve, 30 * 1000))
+  try {
+    await run('verify:verify', {
+      address: verifier.address,
+      constructorArguments: [version],
+    })
+  } catch (err) {
+    console.log(
+      'Error verifiying contract on Etherscan:',
+      err instanceof Error ? err.message : err
+    )
+  }
+
+  return verifier.address
+}
+
+async function deployIncrementalBinaryTreeLib() {
+  console.log(`Deploying incrementalBinaryTreeLib...`)
+  const address = await getIncrementalTreeContract()
+  console.log(`IncrementalBinaryTreeLib deployed to ${address}`)
+
+  await new Promise((resolve) => setTimeout(resolve, 30 * 1000))
+  try {
+    await run('verify:verify', {
+      address,
+    })
+  } catch (err) {
+    console.log(
+      'Error verifiying contract on Etherscan:',
+      err instanceof Error ? err.message : err
+    )
+  }
+
+  return address
 }
 
 main().catch((error) => {
