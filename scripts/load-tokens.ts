@@ -4,9 +4,7 @@ import { ethers } from 'hardhat'
 import { resolve } from 'path'
 import prompt from 'prompt'
 
-const regexes = {
-  ethereumAddress: /^0x[a-fA-F0-9]{40}$/,
-}
+const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
 
 function readLines(filePath: string) {
   return new Promise<string[]>((resolve, reject) => {
@@ -45,12 +43,12 @@ async function main() {
     properties: {
       vcContractAddress: {
         required: true,
-        pattern: regexes.ethereumAddress,
+        pattern: ethereumAddressRegex,
         message: 'VC KetlAllowMap address',
       },
       founderContractAddress: {
         required: true,
-        pattern: regexes.ethereumAddress,
+        pattern: ethereumAddressRegex,
         message: 'Founder KetlAllowMap address',
       },
     },
