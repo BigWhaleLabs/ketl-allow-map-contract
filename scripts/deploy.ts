@@ -87,11 +87,8 @@ async function main() {
       address,
       constructorArguments: [version, verifierAddress, depth],
     })
-  } catch (err) {
-    console.log(
-      'Error verifiying contract on Etherscan:',
-      err instanceof Error ? err.message : err
-    )
+  } catch (error) {
+    parseError(error)
   }
   // Print out the information
   console.log(`${contractName} deployed and verified on Etherscan!`)
@@ -116,11 +113,8 @@ async function deployVerifier() {
       address: verifier.address,
       constructorArguments: [version],
     })
-  } catch (err) {
-    console.log(
-      'Error verifiying contract on Etherscan:',
-      err instanceof Error ? err.message : err
-    )
+  } catch (error) {
+    parseError(error)
   }
 
   return verifier.address
@@ -136,14 +130,18 @@ async function deployIncrementalBinaryTreeLib() {
     await run('verify:verify', {
       address,
     })
-  } catch (err) {
-    console.log(
-      'Error verifiying contract on Etherscan:',
-      err instanceof Error ? err.message : err
-    )
+  } catch (error) {
+    parseError(error)
   }
 
   return address
+}
+
+function parseError(error: Error | unknown) {
+  console.log(
+    'Error verifiying contract on Etherscan:',
+    error instanceof Error ? error.message : error
+  )
 }
 
 main().catch((error) => {
