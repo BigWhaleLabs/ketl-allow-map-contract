@@ -4,6 +4,8 @@ import { ethers } from 'hardhat'
 import { resolve } from 'path'
 import prompt from 'prompt'
 
+const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/
+
 function readLines(filePath: string) {
   return new Promise<string[]>((resolve, reject) => {
     const lines: string[] = []
@@ -22,34 +24,81 @@ function readLines(filePath: string) {
   })
 }
 
+function getBatchOfTokens(tokens: string[], start: number, end: number) {
+  return tokens.slice(start, end)
+}
+
+function prepareAllBatches(tokens: string[]) {
+  const batchStep = 10
+  const batches: string[][] = []
+  for (let i = 0; i < tokens.length; i += batchStep) {
+    const batch = getBatchOfTokens(tokens, i, i + batchStep)
+    batches.push(batch)
+  }
+  return batches
+}
+
 async function main() {
-  const { contractAddress } = await prompt.get({
+  const { vcContractAddress, founderContractAddress } = await prompt.get({
     properties: {
-      contractAddress: {
+      vcContractAddress: {
         required: true,
-        type: 'string',
-        message: 'KetlAllowMap address',
-        default: '0x1d11724475367FB590D862f883F0afC97bDaaD3f',
+        pattern: ethereumAddressRegex,
+        message: 'VC KetlAllowMap address',
+      },
+      founderContractAddress: {
+        required: true,
+        pattern: ethereumAddressRegex,
+        message: 'Founder KetlAllowMap address',
       },
     },
   })
-  const path = resolve(cwd(), 'inputs', 'vc-tokens.txt')
-  const tokens = await readLines(path)
+  const founderTokenPath = resolve(cwd(), 'inputs', 'founder-tokens.txt')
+  const vcTokenPath = resolve(cwd(), 'inputs', 'vc-tokens.txt')
 
-  const factory = await ethers.getContractFactory('KetlAllowMap', {
+  const founderTokens = await readLines(founderTokenPath)
+  const vcTokens = await readLines(vcTokenPath)
+
+  const vcBatches = prepareAllBatches(vcTokens)
+  const founderBatches = prepareAllBatches(founderTokens)
+
+  const founderFactory = await ethers.getContractFactory('KetlAllowMap', {
     libraries: {
-      IncrementalBinaryTree: '0x21aCbA77Ed14A72213F608290e318f2e912EAf50',
+      IncrementalBinaryTree: '0x842B06545f9dc6a3cCe1eFD8e4B44095643e3395',
     },
   })
-  const contract = factory.attach(contractAddress)
-  console.log(tokens)
-  const tx = await contract.addTokenHashes(tokens)
+  const vcFactory = await ethers.getContractFactory('KetlAllowMap', {
+    libraries: {
+      IncrementalBinaryTree: '0xCB7C7C828c88EbFCd982D51B4b52c33a145B5F96',
+    },
+  })
+  const founderAllowMapContract = founderFactory.attach(founderContractAddress)
+  const vcAllowMapContract = vcFactory.attach(vcContractAddress)
 
-  await tx.wait()
+  // VC tokens load
+  for (const [i, batch] of vcBatches.entries()) {
+    console.log(`Loading VC batch ${i}`)
+    const tx = await vcAllowMapContract.addTokenHashes(batch)
+    const receipt = await tx.wait()
 
-  console.log(tx)
+    console.log(
+      `Batch ${i} minted `,
+      `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+    )
+  }
+  // Founder tokens load
+  for (const [i, batch] of founderBatches.entries()) {
+    console.log(`Loading Founder batch ${i}`)
+    const tx = await founderAllowMapContract.addTokenHashes(batch)
+    const receipt = await tx.wait()
+
+    console.log(
+      `Batch ${i} minted `,
+      `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+    )
+  }
+  console.log('All tokens loaded!')
 }
-//
 
 main().catch((error) => {
   console.error(error)
