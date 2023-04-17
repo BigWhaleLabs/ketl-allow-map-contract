@@ -32,8 +32,8 @@
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
     "generate-tokens": "ts-node scripts/generate-tokens.ts",
     "load-tokens": "yarn hardhat run --network deploy scripts/load-tokens.ts",
-    "compile": "scripts/compile-circuit.sh AllowMapChecker ketl-allow-map",
-    "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_13.ptau -o pot/pot13_final.ptau"
+    "compile": "scripts/compile-circuit.sh AllowSocialMapChecker profile-ketl-allow-map && scripts/compile-circuit.sh AllowMapChecker ketl-allow-map",
+    "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_16.ptau -o pot/pot16_final.ptau"
   },
   "devDependencies": {
     "@big-whale-labs/versioned-contract": "^1.0.2",
