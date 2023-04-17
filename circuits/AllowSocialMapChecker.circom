@@ -14,8 +14,6 @@ template AllowSocialMapChecker() {
   signal ownersMerkleRoot <== socialMessage[1];
   // Record Hash
   signal record <== socialMessage[2];
-  // leaf
-  signal input leaf;
   // Check if the EdDSA signature of social is valid
   signal input socialPubKeyX;
   signal input socialPubKeyY;
@@ -46,7 +44,7 @@ template AllowSocialMapChecker() {
   signal input siblings[levels];
 
   component merkleTreeChecker = MerkleTreeCheckerMiMC(levels);
-  merkleTreeChecker.leaf <== leaf;
+  merkleTreeChecker.leaf <== record;
   merkleTreeChecker.root <== ownersMerkleRoot;
   for (var i = 0; i < levels; i++) {
     merkleTreeChecker.pathElements[i] <== siblings[i];

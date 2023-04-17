@@ -65,7 +65,6 @@ export default async function () {
   const recordInputs = await getSocialSignatureInputs(leaf, merkleRoot)
 
   return {
-    leaf: leaf.toString(),
     ...recordInputs,
     ...merkleTreeInputs,
   }
