@@ -1,10 +1,9 @@
 pragma circom 2.0.4;
 
-include "./templates/Nullify.circom";
 include "./templates/EdDSAValidator.circom";
-include "./templates/MerkleTreeCheckerMiMC.circom";
+include "./templates/MerkleTreeCheckerPoseidon.circom";
 
-template AllowSocialMapChecker() {
+template AllowSocialMapChecker(levels) {
   var socialMessageLength = 3;
   // Get messages
   signal input socialMessage[socialMessageLength];
@@ -30,26 +29,24 @@ template AllowSocialMapChecker() {
   for (var i = 0; i < socialMessageLength; i++) {
     socialEdDSAValidator.message[i] <== socialMessage[i];
   }
-  // Create nullifier
-  signal input nonce[2];
-  
-  component nullifier = Nullify();
-  nullifier.r <== nonce[0];
-  nullifier.s <== nonce[1];
 
-  signal output nullifierHash <== nullifier.nullifierHash;
-  // Check Merkle proof
-  var levels = 20;
+  signal input pathElements[levels];
   signal input pathIndices[levels];
-  signal input siblings[levels];
 
-  component merkleTreeChecker = MerkleTreeCheckerMiMC(levels);
+  component merkleTreeChecker = MerkleTreeCheckerPoseidon(15);
   merkleTreeChecker.leaf <== record;
-  merkleTreeChecker.root <== ownersMerkleRoot;
   for (var i = 0; i < levels; i++) {
-    merkleTreeChecker.pathElements[i] <== siblings[i];
+    merkleTreeChecker.pathElements[i] <== pathElements[i];
     merkleTreeChecker.pathIndices[i] <== pathIndices[i];
   }
+
+  signal output root <== merkleTreeChecker.root;
+  // Create nullifier
+  component poseidon = Poseidon(2);
+  poseidon.inputs[0] <== record;
+  poseidon.inputs[1] <== 1337;
+
+  signal output nullifier <== poseidon.out;
 }
 
-component main{public [socialPubKeyX]} = AllowSocialMapChecker();
+component main{public [socialPubKeyX]} = AllowSocialMapChecker(15);

@@ -1,12 +1,13 @@
 import { BigNumber, utils } from 'ethers'
+import { buildPoseidon } from 'circomlibjs'
 import Mimc7 from '../Mimc7'
 import eddsaSign from '../eddsa/eddsaSign'
 import getMerkleTreeInputs from '../getMerkleTreeInputs'
-import getNonceInputs from './getNonceInputs'
 import padZeroesOnRightUint8 from '../padZeroesOnRightUint8'
 
-function hashSocial(mimc7: Mimc7) {
+function hashSocial(poseidon: any) {
   return (social: string) => {
+    const F = poseidon.F
     const maxSocialIdentityLength = 90
     // Message
     const socialIdentityLengthBytes = padZeroesOnRightUint8(
@@ -15,7 +16,7 @@ function hashSocial(mimc7: Mimc7) {
     )
 
     return BigNumber.from(
-      mimc7.hashWithoutBabyJub(socialIdentityLengthBytes)
+      F.toString(poseidon(socialIdentityLengthBytes))
     ).toHexString()
   }
 }
@@ -41,12 +42,12 @@ async function getSocialSignatureInputs(
     socialR8x: mimc7.F.toObject(signature.R8[0]).toString(),
     socialR8y: mimc7.F.toObject(signature.R8[1]).toString(),
     socialS: signature.S.toString(),
-    nonce: getNonceInputs(),
   }
 }
 
 export default async function () {
-  const mimc7 = await new Mimc7().prepare()
+  const poseidon = await buildPoseidon()
+
   const profiles = [
     'linkedin/nikitakolmogorov',
     'linkedin/avrdude',
@@ -54,8 +55,9 @@ export default async function () {
     'linkedin/westmichel',
   ].sort()
 
-  const hashedProfiles = profiles.map(hashSocial(mimc7))
-  const leaf = hashSocial(mimc7)(profiles[0])
+  const hashFunc = hashSocial(poseidon)
+  const hashedProfiles = profiles.map(hashFunc)
+  const leaf = hashFunc(profiles[0])
 
   const { merkleRoot, ...merkleTreeInputs } = await getMerkleTreeInputs(
     hashedProfiles,

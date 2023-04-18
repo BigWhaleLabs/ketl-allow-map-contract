@@ -1,15 +1,13 @@
 import { BigNumber, utils } from 'ethers'
-import getMerkleTree from './getMerkleTree'
+import getMerkleTreeProof from './getMerkleTreeProof'
 
 export default async function (allElements: string[], element: string) {
-  const ownersMerkleTree = await getMerkleTree(
-    allElements.map((v) => BigNumber.from(v))
-  )
-  const merkleRoot = utils.hexlify(ownersMerkleTree.root)
-  const proof = ownersMerkleTree.createProof(allElements.indexOf(element))
+  const proof = await getMerkleTreeProof(element, allElements)
+  const merkleRoot = utils.hexlify(proof.root)
+
   return {
     merkleRoot,
     pathIndices: proof.pathIndices,
-    siblings: proof.siblings.map((v) => v[0]).map((v) => utils.hexlify(v)),
+    pathElements: proof.siblings.map(([s]) => BigNumber.from(s).toHexString()),
   }
 }
