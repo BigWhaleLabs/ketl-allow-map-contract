@@ -59,12 +59,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@big-whale-labs/versioned-contract/contracts/Versioned.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/interfaces/IERC1155.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@zk-kit/incremental-merkle-tree.sol/IncrementalBinaryTree.sol";
 import "./AllowMapCheckerVerifier.sol";
 
-contract KetlAllowMap is Versioned {
+contract KetlAllowMap is Versioned, Ownable {
   using Counters for Counters.Counter;
   using IncrementalBinaryTree for IncrementalTreeData;
 
@@ -77,6 +79,9 @@ contract KetlAllowMap is Versioned {
   uint256[] public tokenHashes;
   mapping(bytes32 => bool) public merkleRootMap;
   IncrementalTreeData public tokenHashesTree;
+
+  IERC1155 public attestationTokenContract;
+  uint maxAttestationTokenId;
 
   // Events
   event TokenHashesAdded(uint256[] tokenHashes, bytes32 newMerkleRoot);
@@ -115,6 +120,12 @@ contract KetlAllowMap is Versioned {
   }
 
   function isAddressAllowed(address _address) public view returns (bool) {
+    // Check if address owns any attestations
+    for (uint256 i = 0; i <= maxAttestationTokenId; i++) {
+      if (attestationTokenContract.balanceOf(_address, i) > 0) {
+        return true;
+      }
+    }
     return allowMap[_address];
   }
 
@@ -131,12 +142,18 @@ contract KetlAllowMap is Versioned {
     emit TokenHashesAdded(_tokenHashes, merkleRoot);
   }
 
-  function isTokenExists(uint256 value) public view returns (bool) {
+  function doesTokenExist(uint256 value) public view returns (bool) {
     for (uint256 i = 0; i < tokenHashes.length; i++) {
       if (tokenHashes[i] == value) {
         return true;
       }
     }
     return false;
+  }
+
+  function setMaxAttestationTokenId(
+    uint _maxAttestationTokenId
+  ) public onlyOwner {
+    maxAttestationTokenId = _maxAttestationTokenId;
   }
 }
