@@ -91,10 +91,12 @@ contract KetlAllowMap is Versioned, Ownable {
   constructor(
     string memory _version,
     address _verifierContract,
-    uint8 _depth
+    uint8 _depth,
+    address _attestationTokenContract
   ) Versioned(_version) {
     verifierContract = _verifierContract;
     tokenHashesTree.init(_depth, 0);
+    attestationTokenContract = IERC1155(_attestationTokenContract);
   }
 
   function addAddressToAllowMap(
@@ -155,5 +157,11 @@ contract KetlAllowMap is Versioned, Ownable {
     uint _maxAttestationTokenId
   ) public onlyOwner {
     maxAttestationTokenId = _maxAttestationTokenId;
+  }
+
+  function setAttestationTokenContract(
+    address _attestationTokenContract
+  ) public onlyOwner {
+    attestationTokenContract = IERC1155(_attestationTokenContract);
   }
 }
